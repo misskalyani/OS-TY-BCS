@@ -1,0 +1,27 @@
+Steps to Install OpenMPI on Ubuntu:
+1) sudo apt update
+
+2)sudo apt install openmpi-bin openmpi-common libopenmpi-dev
+
+3Testing the MPI installation
+
+create a simple MPI program to verify everything is working. For example, create a file named hello_mpi.c with the following content:
+#include <stdio.h>
+#include <mpi.h>
+
+int main(int argc, char *argv[]) {
+    MPI_Init(&argc, &argv);
+    int rank;
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    printf("Hello, World from rank %d\n", rank);
+    MPI_Finalize();
+    return 0;
+}
+
+
+Then compile the program using mpicc (the MPI C compiler):
+mpicc -o hello_mpi hello_mpi.c
+
+Run the program with mpirun:
+mpirun -np 4 ./hello_mpi
+
